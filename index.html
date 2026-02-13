@@ -193,19 +193,34 @@
         }
 
         /* Love Letter */
-        .letter-content {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.6rem;
-            text-align: left;
-            background: rgba(255, 255, 255, 0.9);
-            color: #333;
-            padding: 25px;
-            border-radius: 5px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            min-height: 200px;
-            position: relative;
-        }
+       .letter-content {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    padding: 25px;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    min-height: 200px;
+
+    max-height: 300px;     
+    overflow-y: auto;       
+    scroll-behavior: smooth; 
+}
+
+
+.letter-content {
+    -ms-overflow-style: none; 
+    scrollbar-width: none;     
+}
+
+.letter-content::-webkit-scrollbar {
+    display: none;            
+}
+
+
 
         .cursor::after {
             content: '|';
@@ -325,7 +340,7 @@
         const YOUR_EMAIL = "nashimrahman075@gmail.com";
 
         // ACTION: Customize your love letter here
-        const loveLetterText = "Dearest Love...My chickuu🥺,\n\nI don’t even know where to start, You’ve brought so much light and laughter into my life that sometimes I just sit back and wonder how I got so lucky. Being with you feels like home — safe and warm.\n\nI love the way you care, the way you make even ordinary moments feel special. With you, everything feels more meaningful. You’ve become my favorite person, my best friend, and the most beautiful part of my everyday life.\n\nOn this Valentine’s Day, I just want you to know that my love for you isn’t just for today — it’s in the small good mornings, the late-night talks, the random laughs, and the quiet moments we share. I choose you, today and always.\n\nI love you more than words can express, and I want to spend forever making you happy. Will you be my Valentine? 💖";
+        const loveLetterText = "Dearest Love...My chickuu🥺,\n\nI don’t even know where to start, You’ve brought so much light and laughter into my life that sometimes I just sit back and wonder how I got so lucky. Being with you feels like home — safe and warm.\n\nI love the way you care, the way you make even ordinary moments feel special. With you, everything feels more meaningful. You’ve become my favorite person, my best friend, and the most beautiful part of my everyday life.\n\nOn this Valentine’s Day, I just want you to know that my love for you isn’t just for today — it’s in the small good mornings, the late-night talks, the random laughs, and the quiet moments we share. I choose you, today and always.\n\nI love you more than words can express, and I want to spend forever making you happy 💖";
         /* --------------------- */
 
         // Particle System
@@ -390,18 +405,25 @@
         }
 
         function type() {
-            if (charIndex < loveLetterText.length) {
-                const char = loveLetterText.charAt(charIndex);
-                document.getElementById('typewriter-text').innerHTML += char === '\n' ? '<br>' : char;
-                charIndex++;
-                setTimeout(type, 50);
-            } else {
-                // Show next button after typing is done
-                const btn = document.getElementById('letter-next-btn');
-                btn.style.opacity = '1';
-                btn.style.pointerEvents = 'auto';
-            }
-        }
+    if (charIndex < loveLetterText.length) {
+        const char = loveLetterText.charAt(charIndex);
+        const textElement = document.getElementById('typewriter-text');
+        const letterBox = document.querySelector('.letter-content');
+
+        textElement.innerHTML += char === '\n' ? '<br>' : char;
+        charIndex++;
+
+        // 🔥 Auto scroll to bottom
+        letterBox.scrollTop = letterBox.scrollHeight;
+
+        setTimeout(type, 75);
+    } else {
+        const btn = document.getElementById('letter-next-btn');
+        btn.style.opacity = '1';
+        btn.style.pointerEvents = 'auto';
+    }
+}
+
 
         // "No" Button Interaction
         let dodgeCount = 0;
